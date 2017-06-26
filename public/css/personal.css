@@ -1,0 +1,27 @@
+.btnn {
+    border: 2px solid #393e52;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    padding: 12px 12px;
+    background-color: transparent;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    min-width: 140px;
+    text-transform: uppercase;
+}
+
+.btnn__pure {
+    border-color: #fff;
+}
+
+.btnn__pure:link {
+    text-decoration:none;
+}
+
+.coordinador {
+    color: #3C57AD;
+    font-weight: bold;
+}
