@@ -847,7 +847,10 @@ input[type="submit"]:focus, input[type="button"]:focus{
     top: 0;
     left: 0;
     width: 47%;
-    background: url(../img/header__bg.jpg) no-repeat center top/cover;
+    background: url(../img/header__bg.jpg); 
+    background-size: cover;
+    background-repeat:   no-repeat;
+    background-position: -10px center;
     height: 100%; 
 }
 

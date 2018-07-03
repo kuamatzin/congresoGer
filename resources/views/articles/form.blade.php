@@ -11,6 +11,12 @@
     <small class="text-danger">{{ $errors->first('subtitulo') }}</small>
 </div>
 
+<div class="form-group{{ $errors->has('tipo') ? ' has-error' : '' }}">
+    {!! Form::label('tipo', 'Tipo de publicación') !!}
+    {!! Form::select('tipo',[1 => 'Noticias Información Ciencia y Tecnología', 2 => 'Publicaciones RIDIT'], null, ['id' => 'tipo', 'class' => 'form-control', 'required' => 'required']) !!}
+    <small class="text-danger">{{ $errors->first('tipo') }}</small>
+</div>
+
 <div class="form-group{{ $errors->has('url') ? ' has-error' : '' }}">
     {!! Form::label('url', 'URL') !!}
     {!! Form::text('url', null, ['class' => 'form-control', 'required' => 'required']) !!}
@@ -23,19 +29,11 @@
     <small class="text-danger">{{ $errors->first('imagen') }}</small>
 </div>
 
-@if(isset($article))
-<div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}">
-    {!! Form::label('fecha', 'Fecha') !!}
-    {!! Form::select('fecha', ['1' => 'Enero', '2' => 'Febrero', '3' => 'Marzo', '4' => 'Abril', '5' => 'Mayo', '6' => 'Junio', '7' => 'Julio', '8' => 'Agosto', '9' => 'Septiembre', '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre'], $article->fecha->month, ['id' => 'fecha', 'class' => 'form-control', 'required' => 'required']) !!}
-    <small class="text-danger">{{ $errors->first('fecha') }}</small>
+<div class="form-group{{ $errors->has('pdf') ? ' has-error' : '' }}">
+    {!! Form::label('pdf', 'PDF') !!}
+    {!! Form::file('pdf') !!}
+    <small class="text-danger">{{ $errors->first('pdf') }}</small>
 </div>
-@else
-<div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}">
-    {!! Form::label('fecha', 'Fecha') !!}
-    {!! Form::select('fecha', ['1' => 'Enero', '2' => 'Febrero', '3' => 'Marzo', '4' => 'Abril', '5' => 'Mayo', '6' => 'Junio', '7' => 'Julio', '8' => 'Agosto', '9' => 'Septiembre', '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre'], null, ['id' => 'fecha', 'class' => 'form-control', 'required' => 'required']) !!}
-    <small class="text-danger">{{ $errors->first('fecha') }}</small>
-</div>
-@endif
 
 
 <button type="submit" class="btn btn-success">{{ $submitButtonText}}</button>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container" id="app">
         <a href="/articulos/create" class="btn btn-success">Registrar artículo</a>
         <br><br>
         <div class="panel panel-success">
@@ -15,9 +15,9 @@
                             <tr>
                                 <th>Título</th>
                                 <th>Subtítulo</th>
+                                <th>Tipo de publicación</th>
                                 <th>URL</th>
                                 <th>Imagen</th>
-                                <th>Fecha</th>
                                 <th>Editar</th>
                                 <th>Eliminar</th>
                             </tr>
@@ -28,17 +28,27 @@
                                 <td>{{$article->titulo}}</td>
                                 <td>{{$article->subtitulo}}</td>
                                 <td>
-                                    <a href="{{$article->url}}">{{$article->url}}</a>
+                                    @if($article->tipo == 1)
+                                        Noticias Ciencia y Tecnología
+                                    @else
+                                        Publicaciones RIDIT
+                                    @endif
                                 </td>
                                 <td>
-                                    <img src="/uploads/{{$article->imagen}}" alt="" class="img-responsive" width="120px">
+                                    <a class="btn btn-success" href="{{$article->url}}">Ir a URL</a>
                                 </td>
-                                <td>{{$article->fecha->format('F')}}</td>
+                                <td>
+                                    @if($article->imagen == 'https://fbinstantarticles.files.wordpress.com/2016/05/screen_fast_mobile.jpg')
+                                        <img width="70px" src="https://fbinstantarticles.files.wordpress.com/2016/05/screen_fast_mobile.jpg">
+                                    @else
+                                        <img width="70px" src="/uploads/{{$article->imagen}}">
+                                    @endif
+                                </td>
                                 <td>
                                     <a  href="/articulos/{{$article->id}}/edit" class="btn btn-warning">Editar</a>
                                 </td>
                                 <td>
-                                    <a href="/articulos/{{$article->id}}" class="btn btn-danger">button</a>
+                                    <eliminar :id="{{$article->id}}"></eliminar>
                                 </td>
                             </tr>
                             @endforeach

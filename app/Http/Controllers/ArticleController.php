@@ -5,20 +5,53 @@ namespace App\Http\Controllers;
 use App\Article;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['home', 'fetch', 'test', 'about', 'dates', 'news', 'publications']);
+    }
 
     public function home()
     {
-        $articulos = Article::all();
-        return view('welcome', compact('articulos'));
+        return view('welcome');
+    }
+    public function test()
+    {
+        return view('test');
+    }
+
+    public function about()
+    {
+        return view('about');
+    }
+
+    public function dates()
+    {
+        return view('dates');
+    }
+
+    public function news()
+    {
+        return view('news');
+    }
+
+    public function publications()
+    {
+        return view('publications');
     }
 
     public function index()
     {
-        $articles = Article::all();
+        $articles = Article::all()->sortByDesc("created_at");
         return view('articles.index', compact('articles'));
+    }
+
+    public function fetch()
+    {
+        return Article::where('tipo', Input::get('tipo'))->orderBy('created_at', 'desc')->paginate(8);
     }
 
     public function create()
@@ -28,13 +61,20 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
-        $request['fecha'] = Carbon::createFromDate(2017, $request->fecha, 1, 'America/Mexico_City');
-        $request['imagen'] = $request->file('imagen')->store('articleImages');
+        $datos = $request->all();
 
+        if (array_key_exists('imagen', $datos)) {
+            $datos['imagen'] = $request->file('imagen')->store('articleImages', 'uploads');
+        }
+
+        if (array_key_exists('pdf', $datos)) {
+            $datos['pdf'] = $request->file('pdf')->store('pdfDocs', 'uploads');
+            $datos['url'] = 'uploads/' . $datos['pdf'];
+        }
          
-         Article::create($request->all());
+        Article::create($datos);
 
-         return redirect('articulos');
+        return redirect('articulos');
     }
 
     public function edit($article)
@@ -47,12 +87,19 @@ class ArticleController extends Controller
     public function update($article, Request $request)
     {
         $datos = $request->all();
-        $datos['fecha'] = Carbon::createFromDate(2017, $datos['fecha'], 1, 'America/Mexico_City');
-        $path = $request->file('imagen')->store('articleImages', 'uploads');
-        $datos['imagen'] = $path;
+        if (array_key_exists('imagen', $datos)) {
+            $datos['imagen'] = $request->file('imagen')->store('articleImages', 'uploads');
+        }
         $article = Article::find($article);
         $article->update($datos);
 
-         return redirect('articulos');
+        return redirect('articulos');
+    }
+
+    public function destroy($id)
+    {
+        Article::find($id)->delete();
+
+        return "true";
     }
 }

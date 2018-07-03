@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	/* 2. Count Down module */
 	(function () {
 		function countDown() {
-			var eventDate = new Date(2017, 10, 31, 0, 0, 0, 0),
+			var eventDate = new Date("October 31, 2017 08:00:00"),
 				date = new Date(),
 				timeDiff = Math.abs(eventDate.getTime() - date.getTime()),
 				diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)),
